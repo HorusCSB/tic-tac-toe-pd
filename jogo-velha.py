@@ -52,16 +52,24 @@ def playerTurn():
     global currentPlayer
     global emptySpaces
     global board
+
     while True:
         linha = input("digite a linha (0,1,2):")
         coluna = input("digite a coluna (0,1,2):")
-        if int(linha) not in allowedPlays or int(coluna) not in allowedPlays:
+        try:
+            linha = int(linha)
+            coluna = int(coluna)
+        except ValueError:
+            print("Digite apenas números inteiros!")
+            continue
+        if linha not in allowedPlays or coluna not in allowedPlays:
             print("Por favor, escolha um valor válido!")
-        if (board[int(linha)][int(coluna)] != None):
+        if (board[linha][coluna] != None):
             print("Esta posição já foi preenchida, tente novamente!")
         else:
             break
-    board[int(linha)][int(coluna)] = currentPlayer
+
+    board[linha][coluna] = currentPlayer
     emptySpaces -= 1
     checkWin()
     print(board)
@@ -73,7 +81,8 @@ def main():
         playerTurn()
     if(win == 'tie'):
         print("Empate!")
-    print(currentPlayer,"venceu!")
+    else:
+        print(currentPlayer,"venceu!")
 if __name__ == "__main__":
     main()
 
