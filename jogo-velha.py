@@ -36,22 +36,40 @@ def checkWin():
     global emptySpaces
     global currentPlayer
     global player
+    #cabou espaço empatou
+    if emptySpaces == 0: 
+        win = 'tie'
+        return
+    #diagonal
     if (board[0][0] == board[1][1] == board[2][2]) and board[0][0] != None:
         win = True
         return
+    #linhas
     for n in board:
         if (n[0] == n[1] == n[2]) and n[0] != None:
             win = True
             return
-    if emptySpaces == 0: 
-        win = 'tie'
-        return
+    #colunas
+    for n in range(3):
+        if (board[0][n] == board[1][n] == board[2][n]) and board[0][n] != None:
+            win = True
+            return
     currentPlayer = player[1] if currentPlayer == player[0] else player[0]
+
+def printBoard():
+    print()
+    print(board[0])
+    print(board[1])
+    print(board[2])
 
 def playerTurn():
     global currentPlayer
     global emptySpaces
     global board
+    
+    print()
+    print('Jogador da vez:', currentPlayer)
+    print()
 
     while True:
         linha = input("digite a linha (0,1,2):")
@@ -72,13 +90,15 @@ def playerTurn():
     board[linha][coluna] = currentPlayer
     emptySpaces -= 1
     checkWin()
-    print(board)
+    printBoard()
 
 
 def main():
     start()
     while win == False and win != 'tie':
         playerTurn()
+
+    print()
     if(win == 'tie'):
         print("Empate!")
     else:
