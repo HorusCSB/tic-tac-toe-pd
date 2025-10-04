@@ -1,0 +1,14 @@
+# Para rodar o programa deve-se utilizar o CMD caso seja windows, utilizar o git bash ocasionará em bugs
+
+# Deve rodar primeiro o código jogo-velha com o comando 
+
+> python jogo-velha.py
+
+# Após isso executar em dois terminais os clients
+
+> python client.py
+
+## OBS:
+- O código foi feito apenas para conexão de dois usuários, desconexão não foi considerada
+- Só é permitido que dois usuários estejam conectados ao mesmo tempo
+- Caso um usuário se desconecte é necessário reiniciar o servidor
