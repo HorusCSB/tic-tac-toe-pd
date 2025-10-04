@@ -15,9 +15,6 @@ playersConnected = 0
 allowedPlays = [0, 1, 2]
 
 ##### ----------- regras do jogo da velha
-def getBoard():
-    return board
-
 def getCurrentTurn():
     if playersConnected < 2:
         return "aguardando o segundo jogador..."
@@ -93,6 +90,13 @@ def checkWinStatus():
         return f"{player[currentPlayerIndex]} venceu!"
     return False
 
+def getGameState():
+    return {
+        'board': board,
+        'currentTurn': getCurrentTurn(),
+        'status': checkWinStatus()
+    }
+
 ##### ----------- operações de servidor
 def connect(name):
     global playersConnected
@@ -111,9 +115,7 @@ if __name__ == '__main__':
     print("rodando")
 
     server.register_function(connect)
-    server.register_function(getBoard)
-    server.register_function(getCurrentTurn)
     server.register_function(playerTurn)
-    server.register_function(checkWinStatus)
+    server.register_function(getGameState)
 
     server.serve_forever()

@@ -8,7 +8,7 @@ def printBoard(board):
 
 if __name__ == '__main__':
     client = xmlrpc.client.ServerProxy("http://localhost:8080")
-    name = input("insira seu nome:")
+    name = input("Insira seu nome: ")
     playerId, playerName = client.connect(name)
     
     if playerId == -1:
@@ -18,14 +18,17 @@ if __name__ == '__main__':
     print(f"Você é: {playerName}")
 
     while True:
-        vencedor = client.checkWinStatus()
+        estado = client.getGameState()
+        board = estado['board']
+        currentPlayer = estado['currentTurn']
+        vencedor = estado['status']
+
+        printBoard(board)
+
         if vencedor:
-            print(vencedor)
-            printBoard(client.getBoard())
+            print(f"fim: {vencedor}")
             break
         
-        currentPlayer = client.getCurrentTurn()
-        printBoard(client.getBoard())
         print(f"Vez de: {currentPlayer}")
         
         if currentPlayer == playerName:
@@ -36,9 +39,9 @@ if __name__ == '__main__':
 
                     playResponse = client.playerTurn(linha, coluna, playerId)
                     print(playResponse)
+
                     if "sucesso" in playResponse:
                         break
-                except:
+                except Exception as e:
+                    print(e)
                     exit()
-
-
