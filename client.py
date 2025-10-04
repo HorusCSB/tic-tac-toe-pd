@@ -35,7 +35,7 @@ if __name__ == '__main__':
                     linha, coluna = map(int, jogada.split(","))
 
                     playResponse = client.playerTurn(linha, coluna, playerId)
-
+                    print(playResponse)
                     if "sucesso" in playResponse:
                         break
                 except:
